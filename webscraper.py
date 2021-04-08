@@ -87,6 +87,7 @@ class Linkedin():
                 try:
                     link = topcard.find_element_by_tag_name('a').get_attribute('href')
                     self.might_jobs.append(link)
+                    #self.might_jobs.append({'TimetStamp':time.ctime(), 'Title':title, 'Location':location, 'Company':company, 'Link':link})
                 except:
                     print(title, end=' ')
                     print('Without link')
