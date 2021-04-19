@@ -1,7 +1,7 @@
 from selenium import webdriver
 import pyinputplus as pyinp
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.common.keys import Keys
+#from selenium.webdriver.common.keys import Keys
 #from selenium.webdriver.support.wait import WebDriverWait
 #from selenium.webdriver.support import expected_conditions as EC
 import time
@@ -9,23 +9,20 @@ import os
 import csv
 
 
-url = 'https://www.linkedin.com/jobs/search/?f_E=2&f_WRA=true&geoId=92000000&keywords=software%20engineer&location=Worldwide&sortBy=DD&position=1&pageNum=0'
-url_login = 'https://www.linkedin.com/login' 
 csv_path = 'C:/Users/faust/OneDrive/Escritorio/jobs.csv'
-gecko_path = r'C:/geckodriver/geckodriver.exe'
+url_login = 'https://www.linkedin.com/login' 
+gecko_path = r'C:/geckodriver/geckodriver.exe' 
 
 class Linkedin():
-    targets = ['python', 'django'] # Define targets for jobs
     def __init__(self):
         options = Options()
         options.headless = True
-        #self.driver = webdriver.Firefox(options=options, executable_path=r'C:/geckodriver/geckodriver.exe')
-        self.driver = webdriver.Firefox(executable_path=gecko_path)
+        self.driver = webdriver.Firefox(options=options, executable_path=gecko_path)
         self.driver.get(url_login)
         time.sleep(1)
         self.might_jobs = []
-        self.login()        
-        
+        self.login() 
+        self.targets = [] # Define targets for jobs       
 
     def login(self):
         try:
@@ -52,20 +49,29 @@ class Linkedin():
             self.login()
         except:
             print('Loged!') 
-        
 
+
+    # Add targets
+    def add_target(self, arr): # enter a list
+        self.targets.extend(arr)
+        
     # View targets
     def show_targets(self):
-        if Linkedin.targets:
-            for target in Linkedin.targets:
+        if self.targets:
+            for target in self.targets:
                 print(target)
         else:
             print('No targets')
     
-    # Edit new targets
+    # Delet targets
+    def delet_targets(self):
+        self.targets = []
 
     # Check at least the first 100 jobs
-    def search(self):
+    def search(self, position, location, level):
+        if not self.targets:
+            print('No targets')
+        url = 'https://www.linkedin.com/jobs/search/?f_E=%s&keywords=%s&location=%s' %(level, position, location)
         self.driver.get(url)
         time.sleep(3)
         print('Looking for might jobs...')
@@ -90,7 +96,7 @@ class Linkedin():
                     continue
                 # Look if the job fits the targets
                 score = 0
-                for target in Linkedin.targets:
+                for target in self.targets:
                     if target in description:
                         score += 1
                 if score > 0:
