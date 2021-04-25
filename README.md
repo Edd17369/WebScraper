@@ -18,10 +18,7 @@ Project is created with:
 
 
 ## Setup
-You need to manually download the webdriver for Firefox "Geckodriver" before you can use the python class and put on your system PATH. Also you need to set up the variables 'csv_path' and 'targets' in the script, the first is the path where the csv files are saved and the second are keywords of your interest that the job description must have. 
+You need to manually download the webdriver for Firefox "Geckodriver" before you can use the python class and put it on your system PATH. Also you need to set up the variable 'csv_path' in the script, that is the path where the csv files are saved. 
 
 ## Example
 
-<img src="./images/screenshot1.png" width="650" height="800">
-<img src="./images/screenshot2.png" width="650" height="800">
-<img src="./images/screenshot3.png" width="650" height="800">
